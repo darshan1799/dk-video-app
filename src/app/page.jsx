@@ -1,14 +1,16 @@
-import { Video } from "@imagekit/next";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Suspense } from "react";
 import Loader from "../components/Loader";
-import getVideos from "@/lib/getVideos";
 
 export default async function Home() {
-  const videos = await getVideos();
-
+  //const videos = await getVideos();
+  const url = process.env.BASE_API_URL;
+  const res = await fetch(`${url}api/video`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    return <Loader />;
+  }
+  const { videos } = await res.json();
   return (
     <div className="pt-14 pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-dvh">
       <div className=" gap-2 grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  items-center">
