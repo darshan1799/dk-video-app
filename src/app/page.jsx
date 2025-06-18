@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import Loader from "../components/Loader";
 
 export default async function Home() {
-  const res = await fetch("http://localhost:3000/api/video", {
+  const res = await fetch(`${process.env.BASE_API_URL}/api/video`, {
     method: "GET",
   });
   const videos = await res.json();
