@@ -9,9 +9,6 @@ export async function GET() {
     try
     {
     await connectToDB();
-    const session = await getServerSession(authOptions);
-   
-
     const videos = await VideoModel.find({}).sort({createdAt:-1}).lean();
     if(!videos || videos.length === 0)
     {
@@ -30,8 +27,8 @@ export async function GET() {
    return NextResponse.json({videos:enrichedVideos},{status:200});
     }catch(err)
     {
-       
-        return NextResponse.json({error:"Failed to create video!"},{status:500});
+        console.log(err);
+        return NextResponse.json({error:"Failed to create video!",err},{status:500});
     }
 }
 
@@ -70,6 +67,6 @@ export async function POST(request:NextRequest) {
       return NextResponse.json(newVideo,{status:201});
     } catch(err)
     {
-        return NextResponse.json({error:"Failed to create video!"},{status:500});
+        return NextResponse.json({error:"Failed to create video!",err},{status:500});
     }
 }

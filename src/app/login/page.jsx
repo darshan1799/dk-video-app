@@ -15,7 +15,7 @@ export default function Login() {
   const mutation = useMutation({
     mutationFn: submitData,
     onSuccess: () => {
-      console.log(success);
+      console.log("success");
     },
   });
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

@@ -1,8 +1,7 @@
-import {NextAuthOptions} from 'next-auth';
+import {Account, NextAuthOptions, User} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import connectToDB from './db';
-import { error } from 'console';
 import UserModel from '@/models/User';
 import bcrypt from 'bcryptjs';
 
@@ -50,9 +49,13 @@ export const authOptions: NextAuthOptions = {
                 email
                 //this will be stores in session
             }
-            }catch(error:any)
+            }catch(error:unknown)
             {
-             throw new Error(error.message);
+              if (error instanceof Error) {
+                 throw new Error(error.message);
+                } else {
+                      throw new Error("Unknown error occurred");
+                }
             }
 
            }
@@ -93,32 +96,32 @@ export const authOptions: NextAuthOptions = {
   },
   events:
   {
-      async signIn({user,account}:any)
+      async signIn(message: { user: User; account: Account | null })
       {
         
-        if(account?.provider == "google")
+        if(message.account?.provider == "google")
         {
            await connectToDB();
-           const exist = await UserModel.findOne({email:user.email});
+           const exist = await UserModel.findOne({email:message.user.email});
            if(!exist)
            {
               const userInfo = await UserModel.create(
               {
-                email:user.email,
-                provider:account.provider,
-                image:user.image,
-                name:user.name
+                email:message.user.email,
+                provider:message.account.provider,
+                image:message.user.image,
+                name:message.user.name
               }
             )
-            user.id= userInfo._id;
+            message.user.id= userInfo._id;
            }else
            {
-           user.id = exist._id;
+           message.user.id = exist._id;
            
            }
-           return user;
+        //   return message.user;
         }
-        return user;
+       // return message.user;
       }
   },
   pages:
