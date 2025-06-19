@@ -38,7 +38,7 @@ A full-stack video sharing platform built entirely with **Next.js** and **MongoD
 - **Deployment:** Vercel
 
 ---
-## 📱 Mobile Preview
+## 📱 Mobile App Preview
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/91a86db8-9e2a-49ea-91e8-d5c8712db74e" alt="DK Mobile Preview 2" width="200" height="400" />
