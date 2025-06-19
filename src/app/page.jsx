@@ -13,7 +13,7 @@ export default async function Home() {
   }
   const { videos } = await res.json();
   return (
-    <div className="pt-14 pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-dvh flex items-center justify-center">
+    <div className="pt-14 pb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-dvh ">
       {!videos || (videos?.length == 0 && <VideoNotFound />)}
       <div className=" gap-2 grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  items-center ">
         {videos?.map((video, index) => {

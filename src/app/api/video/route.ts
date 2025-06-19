@@ -15,7 +15,7 @@ export async function GET(request:NextRequest) {
     let videos = [];
     if(email)
     {
-          videos = await VideoModel.find({uploadUser:email+"ff"}).sort({createdAt:-1}).lean();
+          videos = await VideoModel.find({uploadUser:email}).sort({createdAt:-1}).lean();
           return NextResponse.json({videos:videos},{status:200});   
     }
     videos = await VideoModel.find({}).sort({createdAt:-1}).lean();
