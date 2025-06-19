@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { BiLogIn, BiLogOut, BiUpload, BiUser } from "react-icons/bi";
 import { HiHome, HiMenu } from "react-icons/hi";
 import Image from "next/image";
+import { MdVideoLibrary } from "react-icons/md";
 
 export default function NavBar() {
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -66,6 +67,12 @@ export default function NavBar() {
                       className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
                       onMouseLeave={() => setShowUserMenu(false)}
                     >
+                      <Link href="/my-videos">
+                        <button className="w-full flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
+                          <MdVideoLibrary className="w-4 h-4" />
+                          <span>my-videos</span>
+                        </button>
+                      </Link>
                       <Link href="/upload">
                         <button className="w-full flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
                           <BiUpload className="w-4 h-4" />

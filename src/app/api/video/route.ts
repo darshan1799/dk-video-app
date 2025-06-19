@@ -5,11 +5,20 @@ import VideoModel, { IVideo } from "@/models/Video";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request:NextRequest) {
     try
     {
+
     await connectToDB();
-    const videos = await VideoModel.find({}).sort({createdAt:-1}).lean();
+    const email  = request.nextUrl.searchParams.get("my-videos") || null;
+    
+    let videos = [];
+    if(email)
+    {
+          videos = await VideoModel.find({uploadUser:email+"ff"}).sort({createdAt:-1}).lean();
+          return NextResponse.json({videos:videos},{status:200});   
+    }
+    videos = await VideoModel.find({}).sort({createdAt:-1}).lean();
     if(!videos || videos.length === 0)
     {
         return NextResponse.json({message:"No video Found!"},{status:404});
@@ -37,7 +46,7 @@ export async function POST(request:NextRequest) {
     {
 
        const session = await getServerSession(authOptions);
-    
+       
        if(!session)
         {
              return NextResponse.json({error:"Unauthorized!"},{status:401});
